@@ -102,7 +102,7 @@ fi
 
 if command -v clang-format >/dev/null; then
   CLANG_FORMAT_VERSION=$(clang-format --version | awk '{print $3}')
-  tool_version_check "clang-format" "$CLANG_FORMAT_VERSION" "12.0.0"
+  tool_version_check "clang-format" "$CLANG_FORMAT_VERSION" "12.0.1"
 else
     echo "WARNING: clang-format is not installed!"
 fi
