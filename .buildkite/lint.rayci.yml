@@ -26,7 +26,8 @@ steps:
   - label: "lint: doc readme"
     commands:
       - pip install -c python/requirements_compiled.txt docutils
-      - cd python && python setup.py check --restructuredtext --strict --metadata
+      - cd python
+      - python setup.py check --restructuredtext --strict --metadata
     depends_on: forge
 
   - label: "lint: dashboard format"
