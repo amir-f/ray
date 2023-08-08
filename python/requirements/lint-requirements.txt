@@ -1,5 +1,7 @@
 clang-format==12.0.1
 docutils
+clang-format==12.0.1
+docutils
 flake8==3.9.1
 flake8-comprehensions==3.10.1
 flake8-quotes==2.0.0
@@ -10,4 +12,4 @@ black==22.10.0
 isort==5.10.1
 semgrep==1.32.0
 shellcheck-py==0.7.1.1
-shellcheck-py==0.7.1.1
+yq

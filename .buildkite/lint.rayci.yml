@@ -1,52 +1,64 @@
 group: lint
 steps:
-  - label: "lint: clang format"
+  - label: ":book: lint: clang format"
     commands:
       - pip install -c python/requirements_compiled.txt clang-format
       - ./ci/lint/check-git-clang-format-output.sh
     depends_on: forge
 
-  - label: "lint: code format"
+  - label: ":book: lint: code format"
     commands:
       - pip install -c python/requirements_compiled.txt -r python/requirements/lint-requirements.txt
       - FORMAT_SH_PRINT_DIFF=1 ./ci/lint/format.sh --all-scripts
     depends_on: forge
 
-  - label: "lint: untested code snippet"
+  - label: ":book: lint: untested code snippet"
     commands:
       - pip install -c python/requirements_compiled.txt semgrep
       - semgrep ci --config semgrep.yml
     depends_on: forge
 
-  - label: "lint: banned words"
+  - label: ":book: lint: banned words"
     commands:
       - ./ci/lint/check-banned-words.sh
     depends_on: forge
 
-  - label: "lint: doc readme"
+  - label: ":book: lint: doc readme"
     commands:
       - pip install -c python/requirements_compiled.txt docutils
-      - cd python
-      - python setup.py check --restructuredtext --strict --metadata
+      - cd python && python setup.py check --restructuredtext --strict --metadata
     depends_on: forge
 
-  - label: "lint: dashboard format"
+  - label: ":book: lint: dashboard format"
     commands:
       - ./ci/lint/check-dashboard-format.sh
     depends_on: forge
 
-  - label: "lint: copyright format"
+  - label: ":book: lint: copyright format"
     commands:
       - ./ci/lint/copyright-format.sh -c
     depends_on: forge
 
-  - label: "lint: team owner"
+  - label: ":book: lint: bazel team"
     commands:
       - bazel query 'kind("cc_test", //...)' --output=xml | python ./ci/lint/check-bazel-team-owner.py
       - bazel query 'kind("py_test", //...)' --output=xml | python ./ci/lint/check-bazel-team-owner.py
     depends_on: forge
 
-  - label: "lint: test coverage "
+  - label: ":book: lint: bazel buildifier"
+    commands:
+      - ./ci/lint/check-bazel-buildifier.sh
+    depends_on: forge
+
+  - label: ":book: lint: pytest format"
+    commands:
+      - pip install -c python/requirements_compiled.txt yq
+      - ./ci/lint/check-pytest-format.sh
+    depends_on: forge
+
+  - label: ":book: lint: test coverage "
     commands:
       - python ci/pipeline/check-test-run.py
     depends_on: forge
+
+
